@@ -8,14 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 @AllArgsConstructor
 public class MemAccident implements AccidentRepository {
-    private Map<Integer, Accident> accidents;
+
+    private Map<Integer, Accident> accidents = new ConcurrentHashMap<>();
+
+    private final AtomicInteger newId = new AtomicInteger(3);
 
     public MemAccident() {
-        this.accidents = new ConcurrentHashMap<>();
         Accident accident1 = new Accident(1, "name1", "text1", "address1");
         Accident accident2 = new Accident(2, "name2", "text2", "address2");
         Accident accident3 = new Accident(3, "name3", "text3", "address3");
@@ -26,12 +29,9 @@ public class MemAccident implements AccidentRepository {
 
     @Override
     public Accident createAccident(Accident accident) {
-        Accident accidentNew = new Accident(accident.getId(),
-                accident.getName(),
-                accident.getText(),
-                accident.getAddress());
-        accidents.putIfAbsent(accidentNew.getId(), accidentNew);
-        return accidentNew;
+        accident.setId(newId.incrementAndGet());
+        accidents.putIfAbsent(accident.getId(), accident);
+        return accident;
     }
 
     @Override
