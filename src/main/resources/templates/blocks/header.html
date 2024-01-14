@@ -1,12 +1,11 @@
 <div th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="/">Автомобильные инциденты</a>
-            <div class="collapse navbar-collapse">
-                <div class="navbar-nav me-auto">
-                    <a class="nav-item nav-link" href="/">Главная</a>
-                    <a class="nav-link nav-link" href="" th:text="${user}"></a>
-                </div>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="">Главная</a>
+                <a class="nav-item nav-link" th:href="@{/accidents}">Инциденты</a>
+                <a class="nav-item nav-link active" th:href="@{/createAccident}">Добавить Инцидент</a>
+                <a class="nav-link nav-link" href="" th:text="${user}"></a>
             </div>
         </div>
     </nav>
