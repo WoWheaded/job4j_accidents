@@ -8,17 +8,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.job4j.accidents.model.Accident;
-import ru.job4j.accidents.service.AccidentService;
+import ru.job4j.accidents.service.SimpleAccidentService;
+import ru.job4j.accidents.service.SimpleAccidentTypeService;
 
 import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
 public class AccidentController {
-    private final AccidentService accidentsService;
+
+    private final SimpleAccidentService accidentsService;
+
+    private final SimpleAccidentTypeService accidentTypeService;
 
     @GetMapping("/createAccident")
-    public String viewCreateAccident() {
+    public String viewCreateAccident(Model model) {
+        model.addAttribute("types", accidentTypeService.findAllAccidentTypes());
         return "accidents/createAccident";
     }
 
@@ -30,11 +35,13 @@ public class AccidentController {
             return "errors/404";
         }
         model.addAttribute("accident", accidentById.get());
+        model.addAttribute("types", accidentTypeService.findAllAccidentTypes());
         return "accidents/oneAccident";
     }
 
     @PostMapping("/saveAccident")
     public String save(@ModelAttribute Accident accident) {
+        accident.setType(accidentTypeService.findAccidentTypesById(accident.getType().getId()).get());
         accidentsService.createAccident(accident);
         return "redirect:/accidents";
     }
@@ -43,11 +50,13 @@ public class AccidentController {
     public String getUpdateAccidentPage(@PathVariable int id, Model model) {
         Optional<Accident> accident = accidentsService.findAccidentById(id);
         model.addAttribute("accident", accident.get());
+        model.addAttribute("types", accidentTypeService.findAllAccidentTypes());
         return "accidents/updateAccident";
     }
 
     @PostMapping("/updateAccident")
     public String updateAccident(@ModelAttribute Accident accident) {
+        accident.setType(accidentTypeService.findAccidentTypesById(accident.getType().getId()).get());
         accidentsService.updateAccident(accident);
         return "redirect:/accidents";
     }

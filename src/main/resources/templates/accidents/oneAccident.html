@@ -23,15 +23,20 @@
             <div class="col-4">
                 <h4>Название</h4>
                 <text th:text="${accident.name}"></text>
+                <div class="mb-3">
+                    <label for="text" class="form-label"><b>Описание</b></label>
+                    <text class="form-control" id="text" name="text" th:text="${accident.text}"
+                          rows="25"></text>
+                </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label"><b>Адресс</b></label>
+                    <text class="form-control" id="address" name="address" th:text="${accident.address}"
+                          rows="25"></text>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="text" class="form-label"><b>Описание</b></label>
-                <text class="form-control" id="text" name="text" th:text="${accident.text}"
-                      rows="25"></text>
-            </div><div class="mb-3">
-                <label for="address" class="form-label"><b>Адресс</b></label>
-                <text class="form-control" id="address" name="address" th:text="${accident.address}"
-                      rows="25"></text>
+            <div class="col-4">
+                <h4>Тип</h4>
+                <text th:text="${accident.type.name}"></text>
             </div>
             <div class="row my-4">
                 <div class="col-3"><a class="btn btn-danger w-100" th:href="@{/deleteAccident/{id}(id=${accident.id})}">Удалить
