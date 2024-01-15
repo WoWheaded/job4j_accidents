@@ -1,25 +1,24 @@
 package ru.job4j.accidents.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.repository.MemAccident;
+import ru.job4j.accidents.repository.MemAccidentType;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class SimpleAccidentService implements AccidentService {
 
     private final MemAccident memAccident;
-
-    @Autowired
-    public SimpleAccidentService(MemAccident memAccident) {
-        this.memAccident = memAccident;
-    }
+    private final MemAccidentType memAccidentType;
 
     @Override
     public Accident createAccident(Accident accident) {
+        accident.setType(memAccidentType.findAccidentTypesById(accident.getType().getId()).get());
         return memAccident.createAccident(accident);
     }
 
@@ -35,6 +34,7 @@ public class SimpleAccidentService implements AccidentService {
 
     @Override
     public boolean updateAccident(Accident accident) {
+        accident.setType(memAccidentType.findAccidentTypesById(accident.getType().getId()).get());
         return memAccident.updateAccident(accident);
     }
 
