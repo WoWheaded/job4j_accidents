@@ -9,14 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 @AllArgsConstructor
 public class MemAccidentType implements AccidentTypeRepository {
 
     private Map<Integer, AccidentType> accidentTypes = new ConcurrentHashMap<>();
-    private final AtomicInteger newId = new AtomicInteger(3);
 
     public MemAccidentType() {
         AccidentType accidentType1 = new AccidentType(1, "Две машины");

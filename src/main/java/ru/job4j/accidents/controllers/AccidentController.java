@@ -3,11 +3,9 @@ package ru.job4j.accidents.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.job4j.accidents.model.Accident;
+import ru.job4j.accidents.service.SimpleAccidentRuleService;
 import ru.job4j.accidents.service.SimpleAccidentService;
 import ru.job4j.accidents.service.SimpleAccidentTypeService;
 
@@ -21,9 +19,12 @@ public class AccidentController {
 
     private final SimpleAccidentTypeService accidentTypeService;
 
+    private final SimpleAccidentRuleService accidentRuleService;
+
     @GetMapping("/createAccident")
     public String viewCreateAccident(Model model) {
         model.addAttribute("types", accidentTypeService.findAllAccidentTypes());
+        model.addAttribute("rules", accidentRuleService.findAllAccidentRules());
         return "accidents/createAccident";
     }
 
@@ -36,11 +37,13 @@ public class AccidentController {
         }
         model.addAttribute("accident", accidentById.get());
         model.addAttribute("types", accidentTypeService.findAllAccidentTypes());
+        model.addAttribute("rules", accidentRuleService.findAllAccidentRules());
         return "accidents/oneAccident";
     }
 
     @PostMapping("/saveAccident")
-    public String save(@ModelAttribute Accident accident) {
+    public String save(@ModelAttribute Accident accident, @RequestParam("rIds") String[] ids) {
+        accidentRuleService.setRuleById(ids, accident);
         accidentsService.createAccident(accident);
         return "redirect:/accidents";
     }
@@ -50,11 +53,13 @@ public class AccidentController {
         Optional<Accident> accident = accidentsService.findAccidentById(id);
         model.addAttribute("accident", accident.get());
         model.addAttribute("types", accidentTypeService.findAllAccidentTypes());
+        model.addAttribute("rules", accidentRuleService.findAllAccidentRules());
         return "accidents/updateAccident";
     }
 
     @PostMapping("/updateAccident")
-    public String updateAccident(@ModelAttribute Accident accident) {
+    public String updateAccident(@ModelAttribute Accident accident, @RequestParam("rIds") String[] ids) {
+        accidentRuleService.setRuleById(ids, accident);
         accidentsService.updateAccident(accident);
         return "redirect:/accidents";
     }

@@ -27,6 +27,7 @@
             <th class="col-1 p-2" scope="row">Описание нарушения</th>
             <th class="col-1 p-2" scope="row">Адрес нарушения</th>
             <th class="col-1 p-2" scope="row">Тип нарушения</th>
+            <th class="col-1 p-2" scope="row">Статья нарушения</th>
         </tr>
         </thead>
         <tbody>
@@ -37,6 +38,11 @@
             <td class="p-2" th:text="${accident.text}"></td>
             <td class="p-2" th:text="${accident.address}"></td>
             <td class="p-2" th:text="${accident.type.name}"></td>
+            <td>
+                <li th:each="rule: ${accident.rules}">
+                    <span th:text="${rule.name}"></span>
+                </li>
+            </td>
         </tr>
         </tbody>
     </table>

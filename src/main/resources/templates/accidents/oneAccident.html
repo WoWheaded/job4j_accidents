@@ -33,11 +33,19 @@
                     <text class="form-control" id="address" name="address" th:text="${accident.address}"
                           rows="25"></text>
                 </div>
+                <div class="col-4">
+                    <h4>Тип</h4>
+                    <text th:text="${accident.type.name}"></text>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="rules" class="form-label"><b>Статья</b></label>
+                    <li th:each="rule : ${accident.rules}">
+                        <span th:text="${rule.name}"/>
+                    <li>
+                </div>
             </div>
-            <div class="col-4">
-                <h4>Тип</h4>
-                <text th:text="${accident.type.name}"></text>
-            </div>
+
             <div class="row my-4">
                 <div class="col-3"><a class="btn btn-danger w-100" th:href="@{/deleteAccident/{id}(id=${accident.id})}">Удалить
                     задачу</a></div>
