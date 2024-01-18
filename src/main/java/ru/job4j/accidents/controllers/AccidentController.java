@@ -5,21 +5,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.accidents.model.Accident;
-import ru.job4j.accidents.service.SimpleAccidentRuleService;
-import ru.job4j.accidents.service.SimpleAccidentService;
-import ru.job4j.accidents.service.SimpleAccidentTypeService;
+import ru.job4j.accidents.service.JdbcTemplateAccident;
+import ru.job4j.accidents.service.JdbcTemplateAccidentRuleService;
+import ru.job4j.accidents.service.JdbcTemplateAccidentTypeService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
 public class AccidentController {
 
-    private final SimpleAccidentService accidentsService;
+    private final JdbcTemplateAccident accidentsService;
 
-    private final SimpleAccidentTypeService accidentTypeService;
+    private final JdbcTemplateAccidentTypeService accidentTypeService;
 
-    private final SimpleAccidentRuleService accidentRuleService;
+    private final JdbcTemplateAccidentRuleService accidentRuleService;
 
     @GetMapping("/createAccident")
     public String viewCreateAccident(Model model) {
@@ -42,9 +43,8 @@ public class AccidentController {
     }
 
     @PostMapping("/saveAccident")
-    public String save(@ModelAttribute Accident accident, @RequestParam("rIds") String[] ids) {
-        accidentRuleService.setRuleById(ids, accident);
-        accidentsService.createAccident(accident);
+    public String save(@ModelAttribute Accident accident, @RequestParam("rIds") List<Integer> ids) {
+        accidentsService.createAccident(accident, ids);
         return "redirect:/accidents";
     }
 
@@ -58,7 +58,7 @@ public class AccidentController {
     }
 
     @PostMapping("/updateAccident")
-    public String updateAccident(@ModelAttribute Accident accident, @RequestParam("rIds") int[] ids) {
+    public String updateAccident(@ModelAttribute Accident accident, @RequestParam("rIds") List<Integer> ids) {
         accidentsService.updateAccident(accident, ids);
         return "redirect:/accidents";
     }

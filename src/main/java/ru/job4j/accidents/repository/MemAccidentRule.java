@@ -4,11 +4,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accidents.model.Rule;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 @Repository
 @AllArgsConstructor
@@ -33,5 +31,12 @@ public class MemAccidentRule implements AccidentRuleRepository {
     @Override
     public Optional<Rule> findAccidentRuleById(int rulesId) {
         return Optional.ofNullable(accidentRules.get(rulesId));
+    }
+
+    @Override
+    public List<Rule> findRulesByIds(Collection<Integer> ids) {
+        return ids.stream()
+                .map(id -> findAccidentRuleById(id).get())
+                .collect(Collectors.toList());
     }
 }

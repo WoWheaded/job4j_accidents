@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AccidentService {
-    Accident createAccident(Accident accident);
+    Accident createAccident(Accident accident, List<Integer> rulesIds);
 
     List<Accident> findAllAccidents();
 
     Optional<Accident> findAccidentById(int id);
 
-    boolean updateAccident(Accident accident, int[] ids);
+    boolean updateAccident(Accident accident, List<Integer> rulesIds);
 
     boolean deleteAccidentById(int id);
 }
