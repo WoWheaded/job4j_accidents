@@ -37,8 +37,9 @@ public class SimpleAccidentService implements AccidentService {
     }
 
     @Override
-    public boolean updateAccident(Accident accident) {
+    public boolean updateAccident(Accident accident, int[] ids) {
         accident.setType(memAccidentType.findAccidentTypesById(accident.getType().getId()).get());
+        setRuleById(ids, accident);
         return memAccident.updateAccident(accident);
     }
 

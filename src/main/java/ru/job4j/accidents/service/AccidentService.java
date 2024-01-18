@@ -12,7 +12,7 @@ public interface AccidentService {
 
     Optional<Accident> findAccidentById(int id);
 
-    boolean updateAccident(Accident accident);
+    boolean updateAccident(Accident accident, int[] ids);
 
     boolean deleteAccidentById(int id);
 }
