@@ -12,7 +12,7 @@ import ru.job4j.accidents.service.UserService;
 
 @Controller
 @AllArgsConstructor
-public class RegControl {
+public class RegistrationControl {
 
     private final PasswordEncoder encoder;
     private final UserService users;
