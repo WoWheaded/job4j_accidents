@@ -36,14 +36,14 @@ public class SimpleAccidentService implements AccidentService {
     }
 
     @Override
-    public boolean updateAccident(Accident accident, List<Integer> ids) {
+    public void updateAccident(Accident accident, List<Integer> ids) {
         setAccidentTypesAndRules(accident, ids);
-        return memAccident.updateAccident(accident);
+        memAccident.updateAccident(accident);
     }
 
     @Override
-    public boolean deleteAccidentById(int id) {
-        return memAccident.deleteAccidentById(id);
+    public void deleteAccidentById(int id) {
+        memAccident.deleteAccidentById(id);
     }
 
     private void setAccidentTypesAndRules(Accident accident, List<Integer> rulesIds) {

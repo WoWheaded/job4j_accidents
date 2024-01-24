@@ -36,14 +36,14 @@ public class JdbcTemplateAccident implements AccidentService {
     }
 
     @Override
-    public boolean updateAccident(Accident accident, List<Integer> rulesIds) {
+    public void updateAccident(Accident accident, List<Integer> rulesIds) {
         setAccidentTypesAndRules(accident, rulesIds);
-        return accidentJdbcTemplate.updateAccident(accident);
+        accidentJdbcTemplate.updateAccident(accident);
     }
 
     @Override
-    public boolean deleteAccidentById(int id) {
-        return accidentJdbcTemplate.deleteAccidentById(id);
+    public void deleteAccidentById(int id) {
+        accidentJdbcTemplate.deleteAccidentById(id);
     }
 
     private void setAccidentTypesAndRules(Accident accident, List<Integer> rulesIds) {

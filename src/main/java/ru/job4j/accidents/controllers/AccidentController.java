@@ -64,12 +64,8 @@ public class AccidentController {
     }
 
     @GetMapping("/deleteAccident/{id}")
-    public String deleteAccidentById(@PathVariable int id, Model model) {
-        boolean isDeleted = accidentsService.deleteAccidentById(id);
-        if (!isDeleted) {
-            model.addAttribute("message", "Инцедент с идентификатором id: " + id + " не удален");
-            return "errors/404";
-        }
+    public String deleteAccidentById(@PathVariable int id) {
+        accidentsService.deleteAccidentById(id);
         return "redirect:/";
     }
 }

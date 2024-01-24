@@ -28,7 +28,7 @@ public class DataAccidentService implements AccidentService {
 
     @Override
     public List<Accident> findAllAccidents() {
-        return (List<Accident>) dataAccidentRepository.findAll();
+        return dataAccidentRepository.findAll();
     }
 
     @Override
@@ -37,16 +37,14 @@ public class DataAccidentService implements AccidentService {
     }
 
     @Override
-    public boolean updateAccident(Accident accident, List<Integer> rulesIds) {
+    public void updateAccident(Accident accident, List<Integer> rulesIds) {
         setAccidentTypesAndRules(accident, rulesIds);
         dataAccidentRepository.save(accident);
-        return true;
     }
 
     @Override
-    public boolean deleteAccidentById(int id) {
+    public void deleteAccidentById(int id) {
         dataAccidentRepository.deleteById(id);
-        return true;
     }
 
     private void setAccidentTypesAndRules(Accident accident, List<Integer> rulesIds) {
