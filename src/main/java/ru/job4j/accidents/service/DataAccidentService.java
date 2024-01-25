@@ -37,14 +37,14 @@ public class DataAccidentService implements AccidentService {
     }
 
     @Override
-    public void updateAccident(Accident accident, List<Integer> rulesIds) {
+    public boolean updateAccident(Accident accident, List<Integer> rulesIds) {
         setAccidentTypesAndRules(accident, rulesIds);
-        dataAccidentRepository.save(accident);
+        return dataAccidentRepository.save(accident) != null;
     }
 
     @Override
-    public void deleteAccidentById(int id) {
-        dataAccidentRepository.deleteById(id);
+    public boolean deleteAccidentById(int id) {
+        return dataAccidentRepository.deleteById(id);
     }
 
     private void setAccidentTypesAndRules(Accident accident, List<Integer> rulesIds) {

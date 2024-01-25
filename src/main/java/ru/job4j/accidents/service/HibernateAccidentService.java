@@ -36,14 +36,14 @@ public class HibernateAccidentService implements AccidentService {
     }
 
     @Override
-    public void updateAccident(Accident accident, List<Integer> rulesIds) {
+    public boolean updateAccident(Accident accident, List<Integer> rulesIds) {
         setAccidentTypesAndRules(accident, rulesIds);
-        hibernateAccident.updateAccident(accident);
+        return hibernateAccident.updateAccident(accident);
     }
 
     @Override
-    public void deleteAccidentById(int id) {
-        hibernateAccident.deleteAccidentById(id);
+    public boolean deleteAccidentById(int id) {
+        return hibernateAccident.deleteAccidentById(id);
     }
 
     private void setAccidentTypesAndRules(Accident accident, List<Integer> rulesIds) {
